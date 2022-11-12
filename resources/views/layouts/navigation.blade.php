@@ -15,6 +15,38 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+
+                    <x-dropdown>
+                        <x-slot name="trigger">
+                            <x-nav-link style="height: 4rem;" :active="request()->routeIs('leave-requests') || request()->routeIs('leave-requests/*')">
+                                <button style="height: 100%;" class="flex items-center">
+                                    <div>Leave Requests</div>
+
+                                    <div class="ml-1">
+                                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                        </svg>
+                                    </div>
+                                </button>
+                            </x-nav-link>
+                        </x-slot>
+
+                        <x-slot name="content">
+                            @if (auth()->user()->role == 'admin')
+                            <x-dropdown-link :href="route('leave-requests')">
+                                {{ __('View All Requests') }}
+                            </x-dropdown-link>
+                            @endif
+
+                            <x-dropdown-link :href="route('leave-requests/manage')">
+                                {{ __('View My Requests') }}
+                            </x-dropdown-link>
+
+                            <x-dropdown-link :href="route('leave-requests/create')">
+                                {{ __('Create New Request') }}
+                            </x-dropdown-link>
+                        </x-slot>
+                    </x-dropdown>
                 </div>
             </div>
 
@@ -66,6 +98,38 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+
+            <x-dropdown>
+                <x-slot name="trigger">
+                    <x-responsive-nav-link :active="request()->routeIs('leave-requests') || request()->routeIs('leave-requests/*')">
+                        <button style="width: 100%;justify-content: space-between;" class="flex items-center">
+                            <div>Leave Requests</div>
+
+                            <div style="margin-right: 1.25rem;" class="ml-1">
+                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                        </button>
+                    </x-responsive-nav-link>
+                </x-slot>
+
+                <x-slot name="content">
+                    @if (auth()->user()->role == 'admin')
+                    <x-dropdown-link :href="route('leave-requests')">
+                        {{ __('View All Requests') }}
+                    </x-dropdown-link>
+                    @endif
+
+                    <x-dropdown-link :href="route('leave-requests/manage')">
+                        {{ __('View My Requests') }}
+                    </x-dropdown-link>
+
+                    <x-dropdown-link :href="route('leave-requests/create')">
+                        {{ __('Create New Request') }}
+                    </x-dropdown-link>
+                </x-slot>
+            </x-dropdown>
         </div>
 
         <!-- Responsive Settings Options -->

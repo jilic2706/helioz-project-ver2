@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('leave_requests', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->enum('status', ['pending', 'approved', 'denied']);
             $table->dateTime('date_from');
             $table->dateTime('date_to');

@@ -11,7 +11,7 @@ class Department extends Model
 
     protected $fillable = ['name'];
 
-    public function deptHead() {
-        return $this->hasOne(User::class, 'user_id');
+    public function users() {
+        return $this->hasMany(User::class, 'dept_id');
     }
 }

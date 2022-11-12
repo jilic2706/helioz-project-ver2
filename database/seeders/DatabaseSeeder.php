@@ -14,15 +14,40 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\Department::factory(7)->create();
+        \App\Models\Department::factory()->create([
+            'name' => 'Information Technology'
+        ]);
+
+        \App\Models\Department::factory()->create([
+            'name' => 'Public Relations'
+        ]);
+
+        \App\Models\Department::factory()->create([
+            'name' => 'Quality Assurance'
+        ]);
+
+        \App\Models\Department::factory()->create([
+            'name' => 'Research & Development'
+        ]);
+
+        \App\Models\Department::factory()->create([
+            'name' => 'Anomalous Materials'
+        ]);
 
         \App\Models\User::factory(10)->create();
 
-        \App\Models\LeaveRequest::factory(5)->create();
+        $user = \App\Models\User::factory()->create([
+            'name' => 'Gordon Freeman',
+            'email' => 'gf@example.com',
+        ]);
 
         \App\Models\User::factory()->create([
-            'name' => 'J. C. Denton',
-            'email' => 'jc@example.com',
+            'name' => 'Caleb Blood',
+            'email' => 'cb@example.com',
+        ]);
+
+        \App\Models\LeaveRequest::factory(5)->create([
+            'user_id' => $user->id
         ]);
     }
 }

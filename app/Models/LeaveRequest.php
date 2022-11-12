@@ -9,7 +9,7 @@ class LeaveRequest extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['status', 'date_from', 'date_to', 'reason'];
+    protected $fillable = ['user_id', 'status', 'date_from', 'date_to', 'reason'];
 
     public function user() {
         return $this->belongsTo(User::class, 'user_id');
