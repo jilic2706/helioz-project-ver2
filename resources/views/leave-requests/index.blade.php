@@ -50,21 +50,24 @@
                                                 {{ $leave_request->status }}
                                             </x-request-status>
                                         </td>
-
+                                        @if($leave_request->status == 'pending')
                                         <td class="px-4 py-8 border-t border-b border-gray-300 text-base">
                                             <div style="gap: 0.7rem;" class="flex justify-center">
                                                 <form method="POST" action="/leave-requests/{{$leave_request->id}}">
                                                     @csrf
-                                                    @method('DELETE')
-                                                    <button class="text-red-600" {{$leave_request->status == 'denied' ? 'disabled' : ''}}><i class="fa-solid fa-circle-xmark"></i></button>
+                                                    @method('PUT')
+                                                    <input id="status" type="hidden" name="status" value="denied" />
+                                                    <button class="text-red-600"><i class="fa-solid fa-circle-xmark"></i></button>
                                                 </form>
                                                 <form method="POST" action="/leave-requests/{{$leave_request->id}}">
                                                     @csrf
-                                                    @method('DELETE')
-                                                    <button class="text-green-600" {{$leave_request->status == 'approved' ? 'disabled' : ''}}><i class="fa-solid fa-circle-check"></i></button>
+                                                    @method('PUT')
+                                                    <input id="status" type="hidden" name="status" value="approved" />
+                                                    <button class="text-green-600"><i class="fa-solid fa-circle-check"></i></button>
                                                 </form>
                                             </div>
                                         </td>
+                                        @endif
                                     </tr>
                                     @endforeach
                             @endforeach
@@ -121,21 +124,24 @@
                                         {{ $leave_request->status }}
                                     </x-request-status>
                                 </td>
-
+                                @if($leave_request->status == 'pending')
                                 <td class="px-4 py-8 border-t border-b border-gray-300 text-base">
                                     <div style="gap: 0.7rem;" class="flex justify-center">
                                         <form method="POST" action="/leave-requests/{{$leave_request->id}}">
                                             @csrf
-                                            @method('DELETE')
+                                            @method('PUT')
+                                            <input id="status" type="invisible" name="status" value="denied" />
                                             <button class="text-red-600" {{$leave_request->status == 'denied' ? 'disabled' : ''}}><i class="fa-solid fa-circle-xmark"></i></button>
                                         </form>
                                         <form method="POST" action="/leave-requests/{{$leave_request->id}}">
                                             @csrf
-                                            @method('DELETE')
+                                            @method('PUT')
+                                            <input id="status" type="invisible" name="status" value="approved" />
                                             <button class="text-green-600" {{$leave_request->status == 'approved' ? 'disabled' : ''}}><i class="fa-solid fa-circle-check"></i></button>
                                         </form>
                                     </div>
                                 </td>
+                                @endif
                             </tr>
                         @endforeach
                     @endforeach

@@ -70,14 +70,15 @@ class LeaveRequestController extends Controller
 
     // public function edit() {}
 
-    /* public function update(LeaveRequest $leave_request) {
-        if($leave_request->user_id != auth()->id() || auth()->user()->role != 'admin') {
-            abort(403, 'Unauthorized Action');
-        }
-        $leave_request->delete();
+    public function update(Request $request, LeaveRequest $leave_request) {
+        $status_update = $request->input('status');
 
-        return redirect('leave-requests/manage')->with('message', 'Leave request status updated.');
-    } */
+        $leave_request->status = $status_update;
+
+        $leave_request->save();
+
+        return back()->with('message', 'Leave request status updated.');
+    }
 
     public function destroy(LeaveRequest $leave_request) {
         if($leave_request->user_id != auth()->id()) {

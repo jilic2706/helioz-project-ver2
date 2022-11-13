@@ -30,7 +30,7 @@ Route::get('/leave-requests/create', [LeaveRequestController::class, 'create'])-
 
 Route::get('/leave-requests/manage', [LeaveRequestController::class, 'manage'])->middleware('auth')->name('leave-requests/manage');
 
-Route::put('/leave-requests/{leave_request}', [ListingController::class, 'update'])->middleware('auth');
+Route::put('/leave-requests/{leave_request}', [LeaveRequestController::class, 'update'])->middleware('auth');
 
 Route::delete('/leave-requests/{leave_request}', [LeaveRequestController::class, 'destroy'])->middleware('auth');
 

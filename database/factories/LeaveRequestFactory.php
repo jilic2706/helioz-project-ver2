@@ -18,10 +18,17 @@ class LeaveRequestFactory extends Factory
      */
     public function definition()
     {
+        $date_from = $this->faker->date();
+        $date_to = $this->faker->date();
+        while($date_from > $date_to) {
+            $date_to = $this->faker->date();
+        }
         return [
             'status' => "pending",
-            'date_from' => new DateTime("now", new DateTimeZone("CET")),
-            'date_to' => $this->faker->dateTimeBetween("now", "+3 weeks"),
+            //'date_from' => new DateTime("now", new DateTimeZone("CET")),
+            //'date_to' => $this->faker->dateTimeBetween("now", "+3 weeks"),
+            'date_from' => $date_from,
+            'date_to' => $date_to,
             'reason' => $this->faker->sentence(3),
         ];
     }
