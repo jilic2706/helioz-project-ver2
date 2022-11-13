@@ -16,7 +16,7 @@
 ## Building And Running
 - Ensure Docker Desktop is running
 - (OPTIONAL) In the bash, execute the following command to create an alias for ease of starting and stopping the containers: *alias sail='[ -f sail ] && bash sail || bash vendor/bin/sail'*
-- (KINDA IMPORTANT) Because the vendor directory is NOT included in the repo and - thus - you cannot execute ANY sail-related command out-of-the-box, the following command should be executed: 
+- (VERY IMPORTANT FOR THE FOLLOWING FEW STEPS) Because the vendor directory is NOT included in the repo and - thus - you cannot execute ANY sail-related command out of the box, the following command should be executed: 
     - *docker run --rm \
         -u "$(id -u):$(id -g)" \
         -v $(pwd):/var/www/html \
