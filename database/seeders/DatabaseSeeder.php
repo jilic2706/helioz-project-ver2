@@ -42,8 +42,9 @@ class DatabaseSeeder extends Seeder
         ]);
 
         \App\Models\User::factory()->create([
-            'name' => 'Caleb Blood',
-            'email' => 'cb@example.com',
+            'name' => 'Dukie Nukie',
+            'role' => 'admin',
+            'email' => 'dn@example.com',
         ]);
 
         \App\Models\LeaveRequest::factory(5)->create([

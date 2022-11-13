@@ -11,7 +11,7 @@
                 <p class="text-lg font-semibold">{{ $department_name }}</p>
                 @unless(count($department_leave_requests) == 0)
                     @foreach($department_leave_requests as $leave_requests)
-                        <table style="table-layout:fixed;" class="w-full rounded-sm">
+                        <table style="table-layout:fixed; margin: 0.5rem 0;" class="w-full rounded-sm">
                             <thead>
                                 <tr>
                                     <th style="width:12rem;">Date From</th>
@@ -42,27 +42,20 @@
                                         </x-request-status>
                                     </td>
 
-                                    @if($leave_request->status == 'pending')
                                     <td class="px-4 py-8 border-t border-b border-gray-300 text-base">
                                         <div style="gap: 0.7rem;" class="flex justify-center">
                                             <form method="POST" action="/leave-requests/{{$leave_request->id}}">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button class="text-red-600"><i class="fa-solid fa-circle-xmark"></i></button>
+                                                <button class="text-red-600" {{$leave_request->status == 'denied' ? 'disabled' : ''}}><i class="fa-solid fa-circle-xmark"></i></button>
                                             </form>
                                             <form method="POST" action="/leave-requests/{{$leave_request->id}}">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button class="text-gray-600"><i class="fa-solid fa-trash"></i></button>
-                                            </form>
-                                            <form method="POST" action="/leave-requests/{{$leave_request->id}}">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button class="text-green-600"><i class="fa-solid fa-circle-check"></i></button>
+                                                <button class="text-green-600" {{$leave_request->status == 'approved' ? 'disabled' : ''}}><i class="fa-solid fa-circle-check"></i></button>
                                             </form>
                                         </div>
                                     </td>
-                                    @endif
                                 </tr>
                             @endforeach
                             <tbody>
