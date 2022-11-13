@@ -34,21 +34,47 @@ class DatabaseSeeder extends Seeder
             'name' => 'Anomalous Materials'
         ]);
 
-        \App\Models\User::factory(10)->create();
+        \App\Models\Department::factory()->create([
+            'name' => 'Human Resources'
+        ]);
 
-        $user = \App\Models\User::factory()->create([
+        for($i = 1; $i < 5; $i++) {
+            \App\Models\User::factory()->create([
+                'dept_id' => $i
+            ]);
+            \App\Models\LeaveRequest::factory(3)->create([
+                'user_id' => $i
+            ]);
+        }
+
+        $basic_user = \App\Models\User::factory()->create([
             'name' => 'Gordon Freeman',
             'email' => 'gf@example.com',
         ]);
 
-        \App\Models\User::factory()->create([
+        \App\Models\LeaveRequest::factory(5)->create([
+            'user_id' => $basic_user->id
+        ]);
+
+        $dept_head_user = \App\Models\User::factory()->create([
+            'name' => 'Guy Guyvers',
+            'is_dept_head' => true,
+            'email' => 'gg@example.com',
+        ]);
+
+        \App\Models\LeaveRequest::factory(3)->create([
+            'user_id' => $dept_head_user->id
+        ]);
+
+        $admin_user = \App\Models\User::factory()->create([
             'name' => 'Dukie Nukie',
             'role' => 'admin',
+            'dept_id' => 6,
             'email' => 'dn@example.com',
         ]);
 
-        \App\Models\LeaveRequest::factory(5)->create([
-            'user_id' => $user->id
+        \App\Models\LeaveRequest::factory(2)->create([
+            'user_id' => $admin_user->id
         ]);
     }
 }

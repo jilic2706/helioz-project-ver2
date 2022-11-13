@@ -9,6 +9,17 @@ use Illuminate\Support\Collection;
 
 class LeaveRequestController extends Controller
 {
+    private function getLeaveRequestsPerDepartment(Collection $users) {
+        $leave_requests = [];
+        foreach($users as $user) {
+            $leave_requests_per_user = $user->leaveRequests()->get();
+            if(count($leave_requests_per_user) > 0) {
+                $leave_requests[$user->name] = $leave_requests_per_user;
+            }
+        }
+        return $leave_requests;
+    }
+
     public function index() {
         if(auth()->user()->role == 'admin') {
             $all_leave_requests = [];
@@ -18,22 +29,19 @@ class LeaveRequestController extends Controller
                 $all_users[$department->name] = $department->users()->get();
             }
 
-            function getLeaveRequests(Collection $users) {
-                $leave_requests = [];
-                foreach($users as $user) {
-                    $leave_requests_per_user = $user->leaveRequests()->get();
-                    if(count($leave_requests_per_user) > 0) {
-                        array_push($leave_requests, $leave_requests_per_user);
-                    }
-                }
-                return $leave_requests;
-            }
-
             foreach ($all_users as $department_name => $users) {
-                $all_leave_requests[$department_name] = getLeaveRequests($users);
+                $all_leave_requests[$department_name] = $this->getLeaveRequestsPerDepartment($users);
             }
             return view('leave-requests.index', [
                 'all_leave_requests' => $all_leave_requests
+            ]);
+        } else if(auth()->user()->is_dept_head && auth()->user()->role != 'admin') {
+            $department = Department::where('id', auth()->user()->dept_id)->first();
+            $department_users = $department->users()->get();
+            $department_leave_requests = $this->getLeaveRequestsPerDepartment($department_users);
+            return view('leave-requests.index', [
+                'dept_name' => $department->name,
+                'dept_leave_requests' => $department_leave_requests,
             ]);
         }
     }
@@ -72,7 +80,7 @@ class LeaveRequestController extends Controller
     } */
 
     public function destroy(LeaveRequest $leave_request) {
-        if($leave_request->user_id != auth()->id() || auth()->user()->role != 'admin') {
+        if($leave_request->user_id != auth()->id()) {
             abort(403, 'Unauthorized Action');
         }
         $leave_request->delete();

@@ -34,7 +34,13 @@
                         <x-slot name="content">
                             @if (auth()->user()->role == 'admin')
                             <x-dropdown-link :href="route('leave-requests')">
-                                {{ __('View All Requests') }}
+                                {{ __('Review All Requests') }}
+                            </x-dropdown-link>
+                            @endif
+
+                            @if (auth()->user()->is_dept_head && auth()->user()->role != 'admin')
+                            <x-dropdown-link :href="route('leave-requests')">
+                                {{ __('Review Department Requests') }}
                             </x-dropdown-link>
                             @endif
 
@@ -117,7 +123,13 @@
                 <x-slot name="content">
                     @if (auth()->user()->role == 'admin')
                     <x-dropdown-link :href="route('leave-requests')">
-                        {{ __('View All Requests') }}
+                        {{ __('Review All Requests') }}
+                    </x-dropdown-link>
+                    @endif
+
+                    @if (auth()->user()->is_dept_head && auth()->user()->role != 'admin')
+                    <x-dropdown-link :href="route('leave-requests')">
+                        {{ __('Review Department Requests') }}
                     </x-dropdown-link>
                     @endif
 
